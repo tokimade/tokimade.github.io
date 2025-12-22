@@ -15,7 +15,7 @@
 	<meta content="1280" property="og:image:width">
 	<meta content="800" property="og:image:height">
 	<meta content="summary_large_image" property="twitter:card">
-	<link href="assets/images/logo.png" rel="icon" type="image/png">
+	<link href="assets/images/icon.jpg" rel="icon" type="image/png">
 	<link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,700;0,900;1,100;1,200;1,300;1,400;1,700;1,900" rel="stylesheet" type="text/css">
 	<style>
 	   html,
@@ -3932,6 +3932,8 @@
 	       html {
 	           font-size: 9pt;
 	       }
+		    .icons.style1{
+		   justify-content: center;}
 	       #main {
 	           --alignment: center;
 	           --flex-alignment: center;
@@ -8178,7 +8180,7 @@
 	       #text13 {
 	           letter-spacing: 0.175rem;
 	           width: calc(100% + 0.175rem);
-	           font-size: 0.875em;
+	           font-size: 0.575em;
 	           line-height: 1.25;
 	           text-align: center;
 	       }
@@ -9193,7 +9195,7 @@
 	           font-size: 1.125em;
 	       }
 	       #text13 {
-	           font-size: 0.875em;
+	           font-size: 0.575em;
 	       }
 	       h1.style18,
 	       h2.style18,
@@ -9293,7 +9295,291 @@ flex-wrap: wrap;display: flex;align-items: center;flex-direction: row;justify-co
  .tyu {
 flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;align-content: center;align-items: center;
  }
+}/* ---- iframe layout correction ---- */
+.divmid2 {
+  justify-content: flex-start;
 }
+
+table {
+  width: 100%;
+}
+/* --- FORCE FULL-WIDTH LAYOUT (Carrd override) --- */
+.layout {
+  display: flex !important;
+  width: 100vw !important;
+  max-width: none !important;
+}
+
+.sidebar {
+  flex: 0 0 42vw !important;
+  min-width: 420px !important;
+  max-width: 720px !important;
+
+  position: sticky;
+  top: 0;
+  height: 100vh;
+
+  background: #fff;
+}
+
+.content {
+  flex: 1 1 auto !important;
+  min-width: 0; /* critical for flex overflow */
+}
+
+/* Kill Carrd width limits */
+#wrapper,
+#main,
+#main > .inner {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.sidebar iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.iframe-scale {
+  width: 100%;
+  height: 100%;
+
+  transform: scale(0.92);
+  transform-origin: top left;
+
+  /* compensate scale so it stays edge-to-edge */
+  width: calc(100% / 0.92);
+  height: calc(100% / 0.92);
+}
+
+
+
+.sidebar {
+  position: flex;
+  top: 0;
+
+  width: 380px;          /* or whatever you’re using */
+  height: 100vh;
+
+  overflow: visible;     /* 🔑 critical */
+}/* ======================================================
+   Discography Sidebar Layout (FINAL, CLEAN VERSION)
+   ====================================================== */
+
+/* --- Base layout wrapper --- */
+.layout {
+  position: relative;
+}
+
+/* --- Sidebar container (fixed, collapsible) --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 380px;
+  height: 100vh;
+
+  background: #fff;
+  z-index: 100;
+
+  /* Required for scaled iframe */
+  overflow: visible;
+
+  /* Slide animation */
+  transition: transform 0.35s ease;
+}
+
+/* --- Sidebar collapsed state --- */
+#toggle-sidebar:checked ~ .layout .sidebar {
+  transform: translateX(-100%);
+}
+
+/* --- Toggle button (always accessible) --- */
+.sidebar-toggle {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+
+  z-index: 1000;
+  padding: 10px 12px;
+
+  background: #111;
+  color: #fff;
+  border-radius: 6px;
+
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.9rem;
+}
+
+/* --- Main content positioning --- */
+.content {
+  margin-left: 0;
+  min-width: 0;
+
+  transition: margin-left 0.35s ease;
+}
+
+/* Expand content when sidebar is closed */
+#toggle-sidebar:checked ~ .layout .content {
+  margin-left: 33%;
+}
+
+/* ======================================================
+   Iframe scaling (edge-to-edge, no clipping)
+   ====================================================== */
+
+.iframe-scale {
+  position: relative;
+
+  /* Visual density scaling */
+  transform: scale(0.92);
+  transform-origin: top left;
+
+  /* Compensate layout size for scale */
+  width: calc(100% / 0.92);
+  height: calc(100vh / 0.92);
+}
+
+@media (max-width: 720px) {
+.iframe-scale {
+  position: relative;
+
+  /* Visual density scaling */
+  transform: scale(0.4);
+  transform-origin: top left;
+
+  /* Compensate layout size for scale */
+  width: calc(100vw / 0.4);
+  height: calc(100vh / 0.4);
+}
+}
+
+/* Iframe itself */
+.sidebar iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}/* ==================================
+   Popup iframe overlay
+   ================================== */
+
+#iframe-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  z-index: 9999;
+}
+
+/* Active state */
+#iframe-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Modal container */
+.iframe-modal {
+  position: relative;
+  width: min(92vw, 1100px);
+  height: min(88vh, 720px);
+
+  background: #ededed;
+  border-radius: 12px;
+  overflow: hidden;
+
+  transform: scale(0.96);
+  transition: transform 0.3s ease;
+}
+
+/* Animate in */
+#iframe-overlay.active .iframe-modal {
+  transform: scale(1.0);
+}
+
+/* Iframe */
+.iframe-modal iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Close button */
+.iframe-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+
+  color: #000;
+  opacity: 0.6;
+}
+
+.iframe-close:hover {
+  opacity: 1;
+}
+body.modal-open {
+  overflow: hidden;
+}/* ==================================
+   Mobile / Tablet popup behavior
+   ================================== */
+.musicplayer{
+width:200%;}
+@media (max-width: 900px) {
+#iframe-overlay.active .iframe-modal {
+  transform: scale(1);
+}.musicplayer{
+width:100%;}
+
+  .iframe-modal {
+    width: 100vw;
+    height: 100vh;
+
+    max-width: none;
+    max-height: none;
+
+    border-radius: 0;
+  }
+
+  /* Optional: safer close button position for touch */
+  .iframe-close {
+    top: 14px;
+    right: 16px;
+    font-size: 2rem;
+  }
+}@media (max-height: 820px) and (orientation: landscape) {
+
+  .iframe-modal {
+    width: 100vw;
+    height: 100vh;
+
+    max-width: none;
+    max-height: none;
+
+    border-radius: 0;
+  }.iframe-close {
+    top: 12px;
+    right: 14px;
+    font-size: 2rem;
+  }
+}
+
 	</style><noscript>
 	<style>
 	       body {
@@ -9312,7 +9598,15 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
 	           transform: none !important;
 	           transition: none !important;
 	           filter: none !important;
-	       }
+	       }/* ---- iframe layout correction ---- */
+.divmid2 {
+  justify-content: flex-start;
+}
+
+table {
+  width: 100%;
+}
+
 	</style></noscript>
 	<style>
 	  .span2{
@@ -9348,11 +9642,145 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
   left: 0;
   z-index: 1;
 }
-	
+	/* ---- iframe layout correction ---- */
+.divmid2 {
+  justify-content: flex-start;
+}
+
+table {
+  width: 100%;
+}
+
 	</style>
+
+<style>
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  position: flex;
+  top: 0;
+  height: 100vh;
+
+  width: 40%;
+  min-width: 360px;
+  max-width: 720px;
+
+}
+.sidebar iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.content {
+  flex: 1;
+}
+@media (max-width: 900px) {
+  .layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: 45vh;
+    max-width: none;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+  }
+}
+/* ---- iframe layout correction ---- */
+.divmid2 {
+  justify-content: flex-start;
+}
+
+table {
+  width: 100%;
+}
+/* Sidebar base */
+.sidebar {
+  position: flex;
+  top: 0;
+
+  width: 380px;
+  height: 100vh;
+
+  transition: width 0.35s ease;
+  overflow: visible;
+}
+
+/* Toggle button */
+.sidebar-toggle {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1000;
+
+  transition: transform 1.0s ease;
+  background: #111;
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+z-index:99;
+  width: 380px;
+  height: 100vh;
+
+  flex-shrink: 0;
+  transition: transform 0.35s ease;
+}
+
+/* COLLAPSED */
+#toggle-sidebar:checked ~ .layout .sidebar {
+  transform: translateX(0);
+}
+
+#toggle-sidebar ~ .layout .sidebar {
+  transform: translateX(-100%);
+}
+
+.content {
+  flex: 1;
+  min-width: 0; /* prevents overflow bugs */
+}
+
+.sidebar {
+  overflow: visible; /* REQUIRED */
+  width:100%;
+}.bbh-bartle-regular {
+  font-family: "BBH Bartle", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BBH+Bartle&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 
-<body class="is-ready" >
+<body>
+	
+	<input type="checkbox" id="toggle-sidebar" hidden>
+	
+	
+	<label for="toggle-sidebar" class="sidebar-toggle" onmouseover="" style="font-family:BBH Bartle;">
+    ☰ Discography
+  </label>
+	<div class="layout">
+  <aside class="sidebar">
+
+    <div class="iframe-scale">
+      <iframe src="Discography.html"></iframe>
+    </div>
+  </aside>
+  <main class="content">
+  
+  <div class="carrd-shell">
 	<noscript>
 	<style>
 	   body {
@@ -9372,6 +9800,15 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
 	       transition: none !important;
 	       filter: none !important;
 	   }
+	   /* ---- iframe layout correction ---- */
+.divmid2 {
+  justify-content: flex-start;
+}
+
+table {
+  width: 100%;
+}
+
 	</style></noscript>
 	<style id="hide-scrollbar">
 	* {
@@ -9381,7 +9818,15 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
 
 	::-webkit-scrollbar {
 	   display: none;
-	}
+	}/* ---- iframe layout correction ---- */
+.divmid2 {
+  justify-content: flex-start;
+}
+
+table {
+  width: 100%;
+}
+
 	</style><svg height="0" version="1.1" viewbox="0 0 40 40" width="0" xmlns="http://www.w3.org/2000/svg">
 	<symbol id="icon-a63c85b2b6ee333b6d6753e57c8dfe0a" viewbox="0 0 40 40">
 		<path d="M37.6,27.1c0,0-0.3,2.4-1.4,3.5c-1.4,1.4-2.9,1.4-3.6,1.5c-5,0.4-12.4,0.4-12.4,0.4s-9.2-0.1-12.1-0.4 c-0.8-0.1-2.6-0.1-3.9-1.5c-1.1-1.1-1.4-3.5-1.4-3.5s-0.4-2.9-0.4-5.7v-2.7c0-2.9,0.4-5.7,0.4-5.7s0.3-2.4,1.4-3.5 C5.5,8,7,8,7.7,7.9c5-0.4,12.4-0.4,12.4-0.4h0c0,0,7.5,0,12.4,0.4C33.3,8,34.8,8,36.2,9.4c1.1,1.1,1.4,3.5,1.4,3.5s0.4,2.9,0.4,5.7 v2.7C37.9,24.2,37.6,27.1,37.6,27.1z M16.5,14.6l0,9.9l9.6-5L16.5,14.6z">
@@ -9422,27 +9867,20 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
 				<div class="style10 container columns"  id="container06">
 					<div class="wrapper">
 						<div class="inner" data-onvisible-trigger="1">
+						
 							<div>
-								<p class="style23" id="text23">2018 LLzT<br>
-								2021 NarakuuP<br>
-								2023 TOKiMADE<br>
-								2024 TOKiMADE + 1 Hidden Alias (Produce for)<br>
-								2025 TOKiMADE + VII.vy + 1 Hidden Alias (Produce for)</p>
+								
 								<div style="display:flex; padding-top:1rem;     flex-direction: column-reverse;">
-									<ul class="style1 buttons" id="buttons03">
-										<li>
-											<a class="button" href="Discography.html">List of Songs (Song Archive)</a>
-										</li>
-									</ul>
+									
+										
+											<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/7ugD0mt5ZIjVX7lPIXm31U?utm_source=generator" class="musicplayer" height="353" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+										
 								</div>
 							</div>
 
 
 
 							<div>
-								<div class="style1 image" data-position="center" id="image01">
-									<span class="frame"><img alt="" src="assets/images/wireframe.png"></span>
-								</div>
 							</div>
 
 							<div>
@@ -9451,7 +9889,7 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
 								</div>
 
 
-								<p id="text13">a journey to find one's sound</p>
+								<p id="text13">to-ki-maid</p>
 
 
 								<ul class="style1 icons" id="icons01">
@@ -9500,13 +9938,6 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
 									</li>
 
 
-									<li>
-										<a class="n06" href="https://vocadb.net/Ar/99704"><svg aria-labelledby="icon-title">
-										<title>vocadb</title>
-
-										<use xlink:href="#icon-73d0b0c82c119cb2d317581d3e7643f2">
-										</use></svg><span class="label">Voice</span></a>
-									</li>
 								</ul>
 
 
@@ -9515,7 +9946,17 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
 								(J)rock &amp; metal genres (mostly)<br>
 								experimenting with electronic genres<br>
 								since 2020-ish</span>
-								</p>
+								</p><div class="wrapper">
+						
+							<div>
+								<ul class="style1 buttons" id="buttons03">
+									<li>
+										<a class="button n01" href="#" onclick="openPopup('cms.html'); return false;">Commissioning Prices &amp; TOS</a>
+									</li>
+								</ul>
+							</div>
+						
+					</div>
 							</div>
 							
 							
@@ -9523,6 +9964,7 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
 						
 					</div>
 					
+
 				</div>
 
 <!--asdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjj-->
@@ -9536,6 +9978,7 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
 </div>
 
 <!--asdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjj-->
+
 <div style="position: relative; width: 100%; height: 0; padding-top: 56.2225%;
  padding-bottom: 0; box-shadow: 0 0px 100px 0 rgba(63,69,81,0); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
  border-radius: 8px; will-change: transform;">
@@ -9546,36 +9989,42 @@ flex-wrap: wrap;display: flex;flex-direction: column;justify-content: center;ali
 
 <!--asdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjjasdfopijasdfpoiasjdfpoaisdjfpoasidjfasdfjjj-->
 	
-				<div class="style16 container columns" id="container03">
-					<div class="wrapper">
-						<div class="inner" data-onvisible-trigger="1" data-reorder="1,0">
-							<div>
-								<h3 class="style13" id="text09">About Commissions</h3>
 
-
-								<p class="style3" id="text10"><span class="p">I do also make music &amp; edit videos for others too!<br>
-								If you want me to be your music producer, I can! (probably)</span>
-								</p>
-							</div>
-
-
-							<div>
-								<ul class="style1 buttons" id="buttons03">
-									<li>
-										<a class="button n01" href="cms.html">Commissioning Prices, TOS &amp; Payment</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<br>
-
-				<p class="style12" id="text07"><mark>I only accept commissions through Twitter, Discord &amp; E-mail only</mark><br>
-				<mark>[@tokimade]<br>
-				[tokimade.p@gmail.com]</mark>
-				</p>
 
 				<hr class="style2 full screen" id="divider03">
+</div></div></div></div>
+<!-- Popup overlay -->
+<div id="iframe-overlay" aria-hidden="true">
+  <div class="iframe-modal">
+    <button class="iframe-close" aria-label="Close">×</button>
+    <iframe id="popup-iframe" src=""></iframe>
+  </div>
+</div>
+</main>
+</div><script>
+const overlay = document.getElementById("iframe-overlay");
+const iframe = document.getElementById("popup-iframe");
+const closeBtn = document.querySelector(".iframe-close");
+
+function openPopup(url) {
+  iframe.src = url;
+  overlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closePopup() {
+  overlay.classList.remove("active");
+  iframe.src = "";
+  document.body.style.overflow = "";
+}
+
+closeBtn.addEventListener("click", closePopup);
+
+// Click outside to close
+overlay.addEventListener("click", e => {
+  if (e.target === overlay) closePopup();
+});
+</script>
+
 </body>
 </html>
