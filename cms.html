@@ -179,7 +179,16 @@
         *:after {
             box-sizing: border-box;
         }
+/* Firefox */
+html, body {
+  scrollbar-width: none;
+}
 
+/* Chrome, Edge, Safari */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
         body {
             line-height: 1.0;
             min-height: var(--viewport-height);
@@ -2434,7 +2443,10 @@
     <div id="wrapper">
         <div id="main">
             <div class="inner">
-                <h1 id="text03"><span class="p"><strong>TOKiMADE&#39;s Commission Info</strong><br /> <sup><span style="color: grey">current status: <em>closed</em></span></sup>
+                
+				
+				<h1 id="text03"><span class="p">
+				<strong>TOKiMADE&#39;s Commission Info</strong><br /> <sup><span style="color: grey">current status: <em>closed</em></span></sup>
                     </span>
                 </h1>
                 <hr id="divider07">
@@ -2765,10 +2777,15 @@
                                                 <span
                                                     class="p">If you decide to cancel after paying half upfront<br /> You may cancel the commission any time.<br /> Once the final product is approved, a refund is not permitted.</span>
                                 </p>
+								
                             </div>
                         </div>
+						
                     </div>
-                </div>
+                </div><h5>I only accept commissions through Twitter, Discord &amp; E-mail only<br>
+				[@tokimade]<br>
+				[tokimade.p@gmail.com]
+				</h5>
             </div>
         </div>
     </div>
