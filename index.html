@@ -94,25 +94,25 @@
     .track.big { width: 460px; z-index: 5; }
     .track.bigger { width: 720px; z-index: 10; }
 
-    .track.one   { top: 58%; left: 6%;  transform: rotate(-3deg); z-index: 2; }
-    .track.two   { top: 10%; left: 34%; transform: rotate(1deg);  z-index: 5; }
-    .track.three { top: 58%; left: 32%; transform: rotate(4deg);  z-index: 1; }
-    .track.four  { top: 58%; left: 58%; transform: rotate(-2deg); z-index: 1; }
-	.track.five  { top: 58%; left: 58%; transform: rotate(1deg); z-index: 0; }
-	.track.six  { top: 58%; left: 58%; transform: rotate(-2deg); z-index: 1; }
-	.track.seven  { top: 58%; left: 58%; transform: rotate(10deg); z-index: 6;}
-	.track.eight  { top: 58%; left: 58%; transform: rotate(1deg); z-index: 0;}
-	.track.nine  { top: 58%; left: 58%; transform: rotate(-5deg); z-index: 0;}
-	.track.ten  { top: 58%; left: 58%; transform: rotate(-3deg); z-index: 0;}
-	.track.eleven  { top: 58%; left: 58%; transform: rotate(0deg); z-index: -1;}
-	.track.twelve  { top: 58%; left: 58%; transform: rotate(2deg); z-index: 0;}
-	.track.t3  { top: 58%; left: 58%; transform: rotate(3deg); z-index: 0;}
-	.track.t4  { top: 58%; left: 58%; transform: rotate(5deg); z-index: 0;}
-	.track.t5  { top: 58%; left: 58%; transform: rotate(-8deg); z-index: 0;}
-	.track.t6  { top: 58%; left: 58%; transform: rotate(0deg); z-index: 0;}
-	.track.t7  { top: 58%; left: 58%; transform: rotate(0deg); z-index: -1;}
-	.track.t8  { top: 58%; left: 58%; transform: rotate(-2deg); z-index: 0;}
-	.track.t9  { top: 58%; left: 58%; transform: rotate(2deg); z-index: -1;}
+    .track.one   { transform: rotate(-3deg); z-index: 2; }
+    .track.two   { transform: rotate(1deg);  z-index: 5; }
+    .track.three { transform: rotate(4deg);  z-index: 1; }
+    .track.four  { transform: rotate(-2deg); z-index: 1; }
+	.track.five  { transform: rotate(1deg); z-index: 0; }
+	.track.six  { transform: rotate(-2deg); z-index: 1; }
+	.track.seven  { transform: rotate(10deg); z-index: 6;}
+	.track.eight  { transform: rotate(1deg); z-index: 0;}
+	.track.nine  { transform: rotate(-5deg); z-index: 0;}
+	.track.ten  {  transform: rotate(-3deg); z-index: 0;}
+	.track.eleven  { transform: rotate(0deg); z-index: -1;}
+	.track.twelve  { transform: rotate(2deg); z-index: 0;}
+	.track.t3  { transform: rotate(3deg); z-index: 0;}
+	.track.t4  { transform: rotate(5deg); z-index: 0;}
+	.track.t5  {transform: rotate(-8deg); z-index: 0;}
+	.track.t6  { transform: rotate(0deg); z-index: 0;}
+	.track.t7  {  transform: rotate(0deg); z-index: -1;}
+	.track.t8  {  transform: rotate(-2deg); z-index: 0;}
+	.track.t9  {  transform: rotate(2deg); z-index: -1;}
 
     .track h3 {
       position: absolute;
@@ -159,13 +159,6 @@
     }
 
     /* ===== ARTWORK ===== */
-    .art-wrap {
-      position: relative;
-      border-radius: 18px;
-      overflow: hidden;
-      z-index: 1;
-    }
-
     .art {
       width: 100%;
       aspect-ratio: 16 / 9;
@@ -184,25 +177,58 @@
     /* Hover: glow + play icon */
     .track:hover .art-wrap {
       box-shadow: 0 20px 45px var(--glow);
+	  transition: 0.5s ease;
     }
 
-    .play {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 42px;
-      color: white;
-      background: radial-gradient(circle at center, rgba(0,0,0,.35), transparent 70%);
-      opacity: 0;
-      transition: opacity .25s ease;
-      pointer-events: none;
-    }
-  	.tes{
-opacity:0;
+	.art-wrap {
+	  position: relative;
+	  overflow: hidden;
+	  border-radius: 18px;
+	  transition: 0.25s ease;
 	}
-    .track:hover .play { opacity: 1; }
+
+	/* soft dark overlay */
+	.art-wrap::after {
+	  content: "";
+	  position: absolute;
+	  inset: 0;
+	  background: rgba(0, 0, 0, 0.35);
+	  opacity: 0;
+	  transition: opacity 0.25s ease;
+	  pointer-events: none;
+	}
+
+	/* play button */
+	.play {
+	  position: absolute;
+	  inset: 0;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+
+	  font-size: 4em;
+	  color: white;
+		background: radial-gradient(circle at center, rgba(0,0,0,.15), transparent 70%);
+	  opacity: 0;
+	  transform: scale(0.9);
+	  transition:
+		opacity 0.25s ease,
+		transform 0.25s ease;
+
+	  pointer-events: none;
+	  z-index: 2;
+	}
+
+	/* hover trigger */
+	.track:hover .art-wrap::after {
+	  opacity: 1;
+	}
+
+	.track:hover .play {
+	  opacity: 1;
+	  transform: scale(1);
+	}
+   
 
     /* ===== ABOUT ===== */
     .about {
@@ -540,7 +566,7 @@ cursor:none;
   <div class="element track eight" data-id="yourstruly" data-url="https://youtu.be/KnNlCYk4uH0">
     <div class="art-wrap">
       <img class="art" src="https://i.ytimg.com/vi/KnNlCYk4uH0/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>yours, truly</h3>
   </div>
@@ -549,7 +575,7 @@ cursor:none;
   <div class="element track nine" data-id="mentalism" data-url="https://youtu.be/86bX4FZEETU">
     <div class="art-wrap">
       <img class="art" src="https://i.ytimg.com/vi/86bX4FZEETU/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>M3NT4L1SM</h3>
   </div>
@@ -558,7 +584,7 @@ cursor:none;
   <div class="element track ten" data-id="shitshow" data-url="https://youtu.be/0vF-h3Ee4C0">
     <div class="art-wrap">
       <img class="art" src="https://i.ytimg.com/vi/0vF-h3Ee4C0/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>What a Shitshow!</h3>
   </div>
@@ -567,7 +593,7 @@ cursor:none;
   <div class="element track eleven" data-id="mister" data-url="https://youtu.be/-m8ic24tIwQ">
     <div class="art-wrap">
       <img class="art" src="https://i.ytimg.com/vi/-m8ic24tIwQ/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>Mister</h3>
   </div>
@@ -576,7 +602,7 @@ cursor:none;
   <div class="element track twelve" data-id="yol" data-url="https://youtu.be/KeTI7IvZN2Y">
     <div class="art-wrap">
       <img class="art" src="https://i.ytimg.com/vi/KeTI7IvZN2Y/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>Your Only Writer</h3>
   </div>
@@ -585,7 +611,7 @@ cursor:none;
   <div class="element track t3" data-id="nty" data-url="https://youtu.be/4sKHFofY6HE">
     <div class="art-wrap">
       <img class="art" src="https://i.ytimg.com/vi/4sKHFofY6HE/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>NO, Thank you! [Metal Rearrangement]</h3>
   </div>
@@ -594,7 +620,7 @@ cursor:none;
   <div class="element track t4" data-id="rosse" data-url="https://youtu.be/CKr7m2I2Yr8">
     <div class="art-wrap">
       <img class="artsqr" src="https://i.ytimg.com/vi/CKr7m2I2Yr8/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>Rosse Banquet</h3>
   </div>
@@ -603,7 +629,7 @@ cursor:none;
   <div class="element track t5" data-id="nightingal" data-url="https://youtu.be/Smz28FDBI54">
     <div class="art-wrap">
       <img class="art" src="https://i.ytimg.com/vi/Smz28FDBI54/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>Nightingal</h3>
   </div>
@@ -612,7 +638,7 @@ cursor:none;
   <div class="element track bigger t6" data-id="VLIS" data-url="https://youtu.be/8tSj2URemmw">
     <div class="art-wrap">
       <img class="art" src="https://i.ytimg.com/vi/8tSj2URemmw/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>Vivi's Lavender & Ivalette's Secret</h3>
   </div>
@@ -621,7 +647,7 @@ cursor:none;
   <div class="element track big t7" data-id="polliet" data-url="https://youtu.be/5YlrxaX2AKM">
     <div class="art-wrap">
       <img class="art" src="https://i.ytimg.com/vi/5YlrxaX2AKM/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>P-OLLIET</h3>
   </div>
@@ -630,7 +656,7 @@ cursor:none;
   <div class="element track t8" data-id="Calavera" data-url="https://youtu.be/nH5GT11O9jc">
     <div class="art-wrap">
       <img class="art" src="https://i.ytimg.com/vi/nH5GT11O9jc/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>Calavera</h3>
   </div>
@@ -639,7 +665,7 @@ cursor:none;
   <div class="element track t9" data-id="Ars" data-url="https://youtu.be/nAc36abxew8">
     <div class="art-wrap">
       <img class="artsqr" src="https://i.ytimg.com/vi/nAc36abxew8/hqdefault.jpg" />
-      
+      <div class="play">▶</div>
     </div>
     <h3>4Rs</h3>
   </div>
@@ -670,177 +696,152 @@ cursor:none;
 </div>
 <script>
 
-let viewMode = 'canvas'; // 'canvas' | 'atlas'
+const elements = [...document.querySelectorAll('.element')];
 
-const VIEW_SCALES = {
-  canvas: 1,
-  atlas: 0.6
-};
-
+let viewMode = 'canvas';
+const VIEW_SCALES = { canvas: 1, atlas: 0.6 };
 
 const DESIGN_WIDTH = 1920;
 const DESIGN_HEIGHT = 1080;
 
+/* ===============================
+   AUTHORITATIVE INITIAL LAYOUT
+================================ */
+const INITIAL_LAYOUT = {
+  title: { x: 178, y: 54 },
+  about: { x: 633, y: 395 },
+  wireframe: { x: 1176, y: 298 },
+  heartwrencher: { x: 1031, y: 78 },
+  aishite: { x: 360, y: 660 },
+  otononaru: { x: 143, y: 445 },
+  betweenblueandsky: { x: 2028, y: 10 },
+  day1theend: { x: 889, y: 633 },
+  eva: { x: 1434, y: 2 },
+  mentalism: { x: 139, y: 813 },
+  mister: { x: 2075, y: 519 },
+  nightingal: { x: 1641, y: 1114 },
+  nty: { x: -289, y: 1123 },
+  polliet: { x: 871, y: -390 },
+  rosse: { x: -423, y: 412 },
+  shitshow: { x: 1914, y: -188 },
+  yol: { x: 1012, y: 838 },
+  yourstruly: { x: 1510, y: 586 },
+  VLIS: { x: 55, y: -389 },
+  Calavera: { x: 1205, y: 1181 },
+  Ars: { x: -526, y: 44 },
+  cta: { x: 1485, y: 897 }
+};
+
+/* ===============================
+   LAYOUT STATE (DESIGN SPACE)
+================================ */
+let layout = JSON.parse(localStorage.getItem('layout')) || structuredClone(INITIAL_LAYOUT);
+
+/* ===============================
+   APPLY LAYOUT
+================================ */
+function applyLayout() {
+  elements.forEach(el => {
+    const id = el.dataset.id;
+    const pos = layout[id];
+    if (!pos) return;
+    el.style.left = pos.x + 'px';
+    el.style.top  = pos.y + 'px';
+  });
+}
+
+/* ===============================
+   SCALE VIEW (VISUAL ONLY)
+================================ */
 function scaleCanvas() {
   const canvas = document.querySelector('.canvas');
   const inner = document.querySelector('.canvas-inner');
-const vw = canvas.offsetWidth;
-const vh = canvas.offsetHeight;
 
-if (!vw || !vh) return;
-
+  const vw = canvas.clientWidth;
+  const vh = canvas.clientHeight;
 
   const scale = (vw / DESIGN_WIDTH) * VIEW_SCALES[viewMode];
 
-  const scaledWidth  = DESIGN_WIDTH * scale;
-  const scaledHeight = DESIGN_HEIGHT * scale;
-
-  const offsetX = (vw - scaledWidth) / 2;
-  const offsetY = (vh - scaledHeight) / 2;
+  const offsetX = (vw - DESIGN_WIDTH * scale) / 2;
+  const offsetY = (vh - DESIGN_HEIGHT * scale) / 2;
 
   inner.style.transform = `
     translate(${offsetX}px, ${offsetY}px)
     scale(${scale})
   `;
-
   inner.style.transformOrigin = 'top left';
+
+  return scale;
 }
 
+/* ===============================
+   DRAGGING (TRANSFORM SAFE)
+================================ */
+let active = null;
+let startX = 0, startY = 0;
+let originX = 0, originY = 0;
+let currentScale = 1;
 
+elements.forEach(el => {
+  el.addEventListener('mousedown', e => {
+    active = el;
+    const id = el.dataset.id;
+
+    currentScale = scaleCanvas();
+    startX = e.clientX;
+    startY = e.clientY;
+    originX = layout[id].x;
+    originY = layout[id].y;
+
+    el.style.zIndex = 50;
+    e.preventDefault();
+  });
+});
+
+document.addEventListener('mousemove', e => {
+  if (!active) return;
+
+  const id = active.dataset.id;
+  layout[id].x = originX + (e.clientX - startX) / currentScale;
+  layout[id].y = originY + (e.clientY - startY) / currentScale;
+
+  applyLayout();
+});
+
+document.addEventListener('mouseup', () => {
+  if (!active) return;
+  active.style.zIndex = '';
+  localStorage.setItem('layout', JSON.stringify(layout));
+  active = null;
+});
+
+/* ===============================
+   RESET (TRUE RESET)
+================================ */
+document.getElementById('resetBtn').onclick = () => {
+  layout = structuredClone(INITIAL_LAYOUT);
+  localStorage.removeItem('layout');
+  applyLayout();
+  scaleCanvas();
+};
+
+/* ===============================
+   VIEW TOGGLE
+================================ */
+document.getElementById('viewToggleBtn').onclick = () => {
+  viewMode = viewMode === 'canvas' ? 'atlas' : 'canvas';
+  document.getElementById('viewToggleBtn').textContent =
+    viewMode === 'canvas' ? 'Atlas' : 'Canvas';
+  scaleCanvas();
+};
+
+/* ===============================
+   BOOT
+================================ */
+applyLayout();
 scaleCanvas();
+window.addEventListener('resize', scaleCanvas);
 
-
-  const elements = document.querySelectorAll('.element');
-
-  function readLayout(key) {
-    try {
-      return JSON.parse(localStorage.getItem(key) || '{}');
-    } catch {
-      return {};
-    }
-  }
-
-  function applyLayout(layout) {
-    elements.forEach(el => {
-      const id = el.dataset.id;
-      if (layout[id]) {
-        el.style.left = layout[id].left;
-        el.style.top  = layout[id].top;
-      }
-    });
-  }
-
-  function getLayout() {
-    const obj = {};
-    elements.forEach(el => {
-      obj[el.dataset.id] = {
-        left: el.style.left || el.offsetLeft + 'px',
-        top:  el.style.top  || el.offsetTop  + 'px'
-      };
-    });
-    return obj;
-  }
-
-  // ===== HARD-CODED INITIAL LAYOUT (authoritative first load) =====
-  const INITIAL_LAYOUT = {
-	title: {left: "177px",top: "54px"},
-	about: {left: "633px",top: "395px"},
-	wireframe: {left: "1176px",top: "298px"},
-	heartwrencher: {left: "1031px",top: "78px"},
-	aishite: {left: "360px",top: "660px"},
-	otononaru: {left: "7.453%",top: "41.25%"},
-	betweenblueandsky: {left: "2028px",top: "10px"},
-	day1theend: {left: "889px",top: "633px"},
-	eva: {left: "1434px",top: "2px"},
-	yourstruly: {left: "1510px",top: "586px"},
-	mentalism: {left: "139px",top: "813px"},
-	shitshow: {left: "1914px",top: "-188px"},
-	mister: {left: "2075px",top: "519px"},
-	yol: {left: "1012px",top: "838px"},
-	nty: {left: "-289px",top: "1123px"},
-	rosse: {left: "-423px",top: "412px"},
-	nightingal: {left: "1641px",top: "1114px"},
-	VLIS: {left: "55px",top: "-389px"},
-	polliet: {left: "871px",top: "-390px"},
-	Calavera: {left: "1205px",top: "1181px"},
-	Ars: {left: "-526px",top: "44px"},
-	cta: {left: "1485px",top: "897px"}
-  };
-
-  // INITIAL RESTORE (priority: session → default → initial)
-  const sessionLayout = readLayout('layout');
-  const defaultLayout = readLayout('defaultLayout');
-
-  if (Object.keys(sessionLayout).length) {
-    applyLayout(sessionLayout);
-  } else if (Object.keys(defaultLayout).length) {
-    applyLayout(defaultLayout);
-  } else {
-    applyLayout(INITIAL_LAYOUT);
-  }
-
-  // DRAGGING (single global handlers)
-  let active = null;
-  let sx = 0, sy = 0, sl = 0, st = 0;
-
-  elements.forEach(el => {
-    el.addEventListener('mousedown', e => {
-      active = el;
-      active.style.zIndex = 20;
-      sx = e.clientX;
-      sy = e.clientY;
-      sl = el.offsetLeft;
-      st = el.offsetTop;
-      e.preventDefault();
-    });
-  });
-
-  document.addEventListener('mousemove', e => {
-    if (!active) return;
-    active.style.left = sl + (e.clientX - sx) + 'px';
-    active.style.top  = st + (e.clientY - sy) + 'px';
-  });
-
-  document.addEventListener('mouseup', () => {
-    if (!active) return;
-    active.style.zIndex = '';
-    localStorage.setItem('layout', JSON.stringify(getLayout()));
-    active = null;
-  });
-
-  // SAVE AS DEFAULT (true baseline)
-  document.getElementById('saveDefaultBtn').onclick = () => {
-    const snapshot = getLayout();
-    localStorage.setItem('defaultLayout', JSON.stringify(snapshot));
-    localStorage.setItem('layout', JSON.stringify(snapshot));
-    alert('Layout saved as initial state.');
-  };
-
-  // EXPORT LAYOUT (download JSON)
-  document.getElementById('exportLayoutBtn').onclick = () => {
-    const snapshot = getLayout();
-    const blob = new Blob(
-      [JSON.stringify(snapshot, null, 2)],
-      { type: 'application/json' }
-    );
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'layout.json';
-    a.click();
-    URL.revokeObjectURL(a.href);
-  };
-
-  // RESET → default layout
-  document.getElementById('resetBtn').onclick = () => {
-    localStorage.removeItem('layout');
-    const freshDefault = readLayout('defaultLayout');
-    elements.forEach(el => {
-      el.style.left = '';
-      el.style.top  = '';
-    });
-    applyLayout(freshDefault);
-  };
-  
   // Toggle Zoom
 const viewToggleBtn = document.getElementById('viewToggleBtn');
 
