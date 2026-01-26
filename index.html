@@ -83,8 +83,8 @@
       margin: 0;
       font-size: 300px;  
 	  font-family: "Qwitcher Grypen", cursive;
-  font-weight: 700;
-  font-style: normal;
+	  font-weight: 700;
+	  font-style: normal;
       color: #ff5c9a;
       letter-spacing: 0.02em;
     }
@@ -113,6 +113,7 @@
 	.track.t7  {  transform: rotate(0deg); z-index: -1;}
 	.track.t8  {  transform: rotate(-2deg); z-index: 0;}
 	.track.t9  {  transform: rotate(2deg); z-index: -1;}
+	.track.t10  {  transform: rotate(0deg); z-index: -2;}
 
     .track h3 {
       position: absolute;
@@ -150,6 +151,7 @@
     .track.t7 h3  { color: #faa5ba; }
     .track.t8 h3  { color: #f740ae; }
     .track.t9 h3  { color: #222222; }
+    .track.t10 h3  { color: #bef0bb; }
     
 
     .track p {
@@ -669,6 +671,15 @@ cursor:none;
     </div>
     <h3>4Rs</h3>
   </div>
+  
+<!-- TRACK 20: in the garden of love, hearts bloom-->
+  <div class="element track bigger t10" data-id="garden" data-url="https://youtu.be/fNH39qTUB5M">
+    <div class="art-wrap">
+      <img class="art" src="https://i.ytimg.com/vi/fNH39qTUB5M/hqdefault.jpg" />
+      <div class="play">▶</div>
+    </div>
+    <h3>in the garden of love, hearts bloom</h3>
+  </div>
 
   <!-- STUFF -->
   <div class="element cta" data-id="cta">
@@ -729,6 +740,7 @@ const INITIAL_LAYOUT = {
   VLIS: { x: 55, y: -389 },
   Calavera: { x: 1205, y: 1181 },
   Ars: { x: -526, y: 44 },
+  garden: { x: 420, y: 970 },
   cta: { x: 1485, y: 897 }
 };
 document.addEventListener("DOMContentLoaded", () => {
